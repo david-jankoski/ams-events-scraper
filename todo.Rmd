@@ -1,0 +1,27 @@
+---
+title: "plan"
+output: html_document
+---
+
+# To do
+
+- dump each days data into monetdb (+)
+- parse datetime data into nicer format, separate features (+)
+- spatial visualisation prototype (+)
+- refactor code, funs in separate files (+)
+- add distance to Rembrandtplein as feature to each event (obs) (+)
+- write docs
+- tests, especially the scraping stuff
+- check out googledrive pkg for web api's testing 
+- consider switching to crul pkg for async requests
+- make it a package
+- make all funs that call apis more safe (safely ...)
+- idea: pull only results from simfuny that are _actually_ within
+  the range of Rembrandtplein (filter out stuff in Paradiso etc.)
+- partyflock scraper 
+
+# Ideas
+
+- spatio-temporal event analysis 
+  - clustering of highly-popular events in certain area
+  - data mining of temporal patterns e.g. 1st Saturday of each month very busy 
