@@ -55,8 +55,8 @@ events <-
 # construct the event urls from the titles
 events <-
   events %>%
-  dplyr::mutate( 
-    event_link = purrr::map2_chr( nid, title, create_simfuny_event_link ) 
+  dplyr::mutate(
+    event_link = purrr::map2_chr( nid, title, create_simfuny_event_link )
   )
 
 
@@ -111,7 +111,7 @@ events <-
 # bit cleaner look
 events <-
   events %>%
-  
+
   dplyr::mutate_at(
     # select only cols with date in name
     dplyr::vars( contains("date") ),
@@ -121,18 +121,18 @@ events <-
                 conv = convert_dates
     )
   ) %>%
-  
+
   dplyr::mutate(
     # does simfuny indicate in the title that event is sold out?
-    sold_out = 
+    sold_out =
       stringr::str_detect(
-        title, 
+        title,
         "sold out|SOLD OUT|uitverkocht|UITVERKOCHT"
         ),
     # timestamp of this run
     timestamp = Sys.time()
   ) %>%
-  
+
   # convert lat,lon, attending (from simfuny website) to numeric
   dplyr::mutate_at(
     dplyr::vars(lat, long, attending),
@@ -155,8 +155,8 @@ events <- get_distance_to_rembrandt(events)
 
 # 6. Dump run into MonetDB --------------------
 
-# store/append data in a db 
-stored_ok <- store_data_in_db(events)
+# store/append data in a db
+stored_ok <- store_data_in_db(events, "data/db", "events")
 
 # halt if something went wrong
 stopifnot(stored_ok)
@@ -178,17 +178,17 @@ events_map <-
   leaflet::setView(lat = 52.3702, lng = 4.8952, zoom = 14) %>%
   leaflet::addAwesomeMarkers(
     lng = ~ long, lat = ~ lat,
-    label = ~ title) %>% 
+    label = ~ title) %>%
   leaflet::ad
 #%>% leaflet::addCircles(radius = ~ fb_going)
 
 events_map
 
 library("mapview")
-map_view <- 
-  mapview(rembrandtplein) %>% 
-  leaflet::addCircleMarkers(st_transform(events_sf, crs = 4326L), color = "purple") 
+map_view <-
+  mapview(rembrandtplein) %>%
+  leaflet::addCircleMarkers(st_transform(events_sf, crs = 4326L), color = "purple")
 
 
-mapview(st_transform(events_sf, crs = 4326L)) %>% 
+mapview(st_transform(events_sf, crs = 4326L)) %>%
   leaflet::addPolygons(st_transform(rembrandtplein, crs = 4326L,color = "purple") )
