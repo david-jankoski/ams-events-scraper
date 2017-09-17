@@ -10,18 +10,23 @@ output: html_document
 - spatial visualisation prototype (+)
 - refactor code, funs in separate files (+)
 - add distance to Rembrandtplein as feature to each event (obs) (+)
+- partyflock scraper (+)
+- get coordinates of all locations in amsterdam (+)
 - write docs
 - tests, especially the scraping stuff
 - check out googledrive pkg for web api's testing 
 - consider switching to crul pkg for async requests
 - make it a package
 - make all funs that call apis more safe (safely ...)
-- idea: pull only results from simfuny that are _actually_ within
-  the range of Rembrandtplein (filter out stuff in Paradiso etc.)
-- partyflock scraper 
 
 # Ideas
 
 - spatio-temporal event analysis 
   - clustering of highly-popular events in certain area
-  - data mining of temporal patterns e.g. 1st Saturday of each month very busy 
+  - data mining of temporal patterns e.g. 1st Saturday of each month very
+  busy
+- pull only results from simfuny that are _actually_ within
+  the range of Rembrandtplein (filter out stuff in Paradiso etc.)
+
+- [related events](http://api.simfuny.com/app/api/2_0/event?callback=__ng_jsonp__.__req1.finished&nid=127311)
+- [same host events](http://api.simfuny.com/app/api/2_0/events/host?callback=__ng_jsonp__.__req1.finished&hostid=50501&eventid=127311)
