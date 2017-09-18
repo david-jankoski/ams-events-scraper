@@ -9,7 +9,8 @@ library("tidyverse")
 files <- c("R/simfuny_funs.R",
            "R/facebook_funs.R",
            "R/enrich_data_funs.R",
-           "R/store_data.R")
+           "R/store_data.R",
+           "R/dist_rembrandtplein.R")
 invisible(sapply(files, source))
 
 # go to simfuny.com, select date "Deze Week", sort by "Populair" and
@@ -63,16 +64,17 @@ events <-
 # 3. Get fb link for each event -------------------
 
 # .3.1 Start Docker  ------
-#
-# Initialise docker daemon and start the splashr docker image
-# Need to find solution for the first one from within R
-#
+# Initialise docker daemon in background
+dkrid <- sys::exec_background("sudo", "dockerd")
+Sys.sleep(10)
+
 # this should get docker + splash running on 127.0.0.1 port 8050
 # sudo dockerd
 #
 # then this should do the trick
 library("splashr")
 splashr::start_splash()
+Sys.sleep(10)
 
 # alternative manual method
 #sp <- splash(host = "127.0.0.1", port = "8050")
@@ -162,6 +164,16 @@ stored_ok <- store_data_in_db(events, "data/db", "events")
 stopifnot(stored_ok)
 
 
+# 7. Clean up & exit --------
+
+# stop splash container
+# TODO doesnt seem to work FIXME
+splashr::stop_splash()
+
+# stop dockerdaemon
+tools::pskill(dkrid)
+
+
 # 7. Map events ------------------------------
 #
 # REMARK : This part should be optional and
@@ -187,8 +199,6 @@ events_map
 library("mapview")
 map_view <-
   mapview(rembrandtplein) %>%
-  leaflet::addCircleMarkers(st_transform(events_sf, crs = 4326L), color = "purple")
-
-
-mapview(st_transform(events_sf, crs = 4326L)) %>%
-  leaflet::addPolygons(st_transform(rembrandtplein, crs = 4326L,color = "purple") )
+  leaflet::addCircleMarkers(., lng = ~ events$long,
+                            lat = ~ events$lat,
+                            color = "purple")
