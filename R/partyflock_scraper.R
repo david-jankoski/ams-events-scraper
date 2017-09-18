@@ -1,18 +1,16 @@
-
 # In order this to work you need to start
 # Rstudio with sudo rstudio !
+
 library("tidyverse")
+source("R/store_data.R")
 
 # Run dockerd as a background process
 dkrid <- sys::exec_background("sudo", "dockerd")
-# Kill dockerd when fun exits
-#on.exit(tools::pskill(dkrid))
 Sys.sleep(10)
 
 # start splash wait till init done
 library("splashr")
-splashr::start_splash()
-Sys.sleep(10)
+sp <- splashr::start_splash()
 
 # halt if smth goes wrong
 stopifnot(splashr::splash_active())
@@ -124,8 +122,6 @@ partyflock_df$date_id <- NULL
 # timestamp of scraping
 partyflock_df$timestamp <- Sys.time()
 
-# stop the docker daemon
-tools::pskill(dkrid)
 
 # 6. Dump run into MonetDB --------------------
 
@@ -135,7 +131,14 @@ stored_ok <- store_data_in_db(partyflock_df, "data/db", "partyflock")
 # halt if something went wrong
 stopifnot(stored_ok)
 
+# 5. Clean up & exit --------
 
+# stop splash container
+splashr::stop_splash(sp)
+Sys.sleep(3)
+
+# stop the docker daemon
+tools::pskill(dkrid)
 
 # -----
 # maybe add some visualisation of the
