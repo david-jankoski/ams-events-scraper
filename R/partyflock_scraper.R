@@ -11,6 +11,7 @@ Sys.sleep(10)
 # start splash wait till init done
 library("splashr")
 sp <- splashr::start_splash()
+Sys.sleep(5)
 
 # halt if smth goes wrong
 stopifnot(splashr::splash_active())
@@ -26,9 +27,10 @@ partyflock_html <-
 partyflock_df <-
   partyflock_html %>%
   rvest::html_node("table.partylist.fw.nocellbrd.vtop") %>%
-  rvest::html_table()
+  rvest::html_table(trim = TRUE, fill = TRUE)
 
 # better names, remove empty
+if (ncol(partyflock_df) > 4L) partyflock_df <- partyflock_df[1:4]
 partyflock_df$X2 <- NULL
 
 colnames(partyflock_df) <-
@@ -145,5 +147,6 @@ tools::pskill(dkrid)
 # partyflock attendance ?
 
 # ggplot(partyflock_df,
-#        aes(forcats::fct_reorder(factor(event_location), attending), attending))+
-#   geom_col()
+#        aes(reorder(event_location, attending, max), attending)) +
+#   geom_col() +
+#   coord_flip()
