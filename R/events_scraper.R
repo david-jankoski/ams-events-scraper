@@ -68,20 +68,12 @@ events <-
 dkrid <- sys::exec_background("sudo", "dockerd")
 Sys.sleep(10)
 
-# this should get docker + splash running on 127.0.0.1 port 8050
-# sudo dockerd
-#
-# then this should do the trick
+# start splash
 library("splashr")
-splashr::start_splash()
+sp <- splashr::start_splash()
 Sys.sleep(10)
 
-# alternative manual method
-#sp <- splash(host = "127.0.0.1", port = "8050")
-
 # if all went ok this should return TRUE
-# for the alternative manual method :
-# stopifnot(splash_active(sp))
 stopifnot(splashr::splash_active())
 
 # .3.2 Get Fb link ------
@@ -167,38 +159,38 @@ stopifnot(stored_ok)
 # 7. Clean up & exit --------
 
 # stop splash container
-# TODO doesnt seem to work FIXME
-splashr::stop_splash()
+splashr::stop_splash(sp)
+Sys.sleep(5)
 
 # stop dockerdaemon
 tools::pskill(dkrid)
+Sys.sleep(5)
 
-
-# 7. Map events ------------------------------
+# # 7. Map events ------------------------------
+# #
+# # REMARK : This part should be optional and
+# # actually removed from here.
+# # TODO remove from here to an (optional part) or smth?
 #
-# REMARK : This part should be optional and
-# actually removed from here.
-# TODO remove from here to an (optional part) or smth?
-
-library("leaflet")
-
-events_map <-
-  leaflet::leaflet(data = events) %>%
-  leaflet::addProviderTiles(
-    leaflet::providers$CartoDB.Positron
-    ) %>%
-  leaflet::setView(lat = 52.3702, lng = 4.8952, zoom = 14) %>%
-  leaflet::addAwesomeMarkers(
-    lng = ~ long, lat = ~ lat,
-    label = ~ title) %>%
-  leaflet::ad
-#%>% leaflet::addCircles(radius = ~ fb_going)
-
-events_map
-
-library("mapview")
-map_view <-
-  mapview(rembrandtplein) %>%
-  leaflet::addCircleMarkers(., lng = ~ events$long,
-                            lat = ~ events$lat,
-                            color = "purple")
+# library("leaflet")
+#
+# events_map <-
+#   leaflet::leaflet(data = events) %>%
+#   leaflet::addProviderTiles(
+#     leaflet::providers$CartoDB.Positron
+#     ) %>%
+#   leaflet::setView(lat = 52.3702, lng = 4.8952, zoom = 14) %>%
+#   leaflet::addAwesomeMarkers(
+#     lng = ~ long, lat = ~ lat,
+#     label = ~ title) %>%
+#   leaflet::ad
+# #%>% leaflet::addCircles(radius = ~ fb_going)
+#
+# events_map
+#
+# library("mapview")
+# map_view <-
+#   mapview(rembrandtplein) %>%
+#   leaflet::addCircleMarkers(., lng = ~ events$long,
+#                             lat = ~ events$lat,
+#                             color = "purple")
