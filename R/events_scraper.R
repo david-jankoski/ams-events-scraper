@@ -5,7 +5,6 @@ library("glue")
 library("tidyverse")
 
 # source needed funs
-# TODO make this script fun and pkg everything up
 files <- c("R/simfuny_funs.R",
            "R/facebook_funs.R",
            "R/enrich_data_funs.R",
