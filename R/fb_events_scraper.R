@@ -1,11 +1,7 @@
 library("Rfacebook")
 library("tidyverse")
 
-app_id <- 1933337920258629
-app_scrt <- "96884cc4570c3799ea4d7d83d0cdf22b"
-
-fb_auth <- fbOAuth(app_id, app_scrt,
-                   extended_permissions = TRUE)
+fb_auth <- readRDS("fb_account/fb_authtoken.rds")
 
 # get all liked pages
 liked_pages <- getLikes("me", token = fb_auth)
