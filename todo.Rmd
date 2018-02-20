@@ -5,7 +5,7 @@ output: html_document
 
 # To do
 
-- dump each days data into monetdb (+)
+- ~~dump each days data into monetdb~~ (+)
 - parse datetime data into nicer format, separate features (+)
 - spatial visualisation prototype (+)
 - refactor code, funs in separate files (+)
@@ -13,17 +13,17 @@ output: html_document
 - partyflock scraper (+)
 - fake facebook account scraper (+)
 - get coordinates of all locations in amsterdam (+)
-- think about unified data model for all 3 scrapers...
-- or better maybe to keep them separate?
+
+- set unified data model
 - change window of pulled data and increase number of pulled events
-- change db dir to somewhere outside of pkg dir
-- investigate other bars and venues around Rembrandtplein
-- write docs
-- tests, especially the scraping stuff
-- check out googledrive pkg for web api's testing 
-- consider switching to crul pkg for async requests
-- make it a package
 - make all funs that call apis more safe (safely ...)
+- tests, especially the scraping stuff
+- write docs
+
+- check out role model pkgs for web api's testing (googledrive, osmdata)
+- consider switching to crul pkg for async requests
+
+
 
 # Ideas
 
