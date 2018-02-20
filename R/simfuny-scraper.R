@@ -181,13 +181,16 @@ Sys.sleep(5)
 #   leaflet::setView(lat = 52.3702, lng = 4.8952, zoom = 14) %>%
 #   leaflet::addAwesomeMarkers(
 #     lng = ~ long, lat = ~ lat,
-#     label = ~ title) %>%
-#   leaflet::ad
-# #%>% leaflet::addCircles(radius = ~ fb_going)
+#     label = ~ title) #%>%
+#   #leaflet::addCircles(radius = ~ fb_going)
 #
 # events_map
 #
 # library("mapview")
+#
+# rembrandtplein <- readRDS("data/rembrandtplein_polygon_sf.rds")
+# rembrandtplein <- rembrandtplein$finished
+#
 # map_view <-
 #   mapview(rembrandtplein) %>%
 #   leaflet::addCircleMarkers(., lng = ~ events$long,

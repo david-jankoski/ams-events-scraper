@@ -11,7 +11,13 @@ output: html_document
 - refactor code, funs in separate files (+)
 - add distance to Rembrandtplein as feature to each event (obs) (+)
 - partyflock scraper (+)
+- fake facebook account scraper (+)
 - get coordinates of all locations in amsterdam (+)
+- think about unified data model for all 3 scrapers...
+- or better maybe to keep them separate?
+- change window of pulled data and increase number of pulled events
+- change db dir to somewhere outside of pkg dir
+- investigate other bars and venues around Rembrandtplein
 - write docs
 - tests, especially the scraping stuff
 - check out googledrive pkg for web api's testing 
