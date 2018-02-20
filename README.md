@@ -3,16 +3,24 @@ title: "plan"
 output: html_document
 ---
 
+Scraper for events happening around Amsterdam. R pkg intented to provide functionality for:  
+
+- scraping of data from various sources
+- cleaning up and enrich the data
+- store away in a db
+- some analysis tools as well as a jab at a predictive model
+- visualisation tools  
+
 # To do
 
-- ~~dump each days data into monetdb~~ (+)
-- parse datetime data into nicer format, separate features (+)
-- spatial visualisation prototype (+)
-- refactor code, funs in separate files (+)
-- add distance to Rembrandtplein as feature to each event (obs) (+)
-- partyflock scraper (+)
-- fake facebook account scraper (+)
-- get coordinates of all locations in amsterdam (+)
+- ~~dump each days data into monetdb~~  
+- ~~parse datetime data into nicer format, separate features~~
+- ~~spatial visualisation prototype~~
+- ~~refactor code, funs in separate files~~
+- ~~add distance to Rembrandtplein as feature to each event (obs)~~
+- ~~partyflock scraper~~
+- ~~fake facebook account scraper~~
+- ~~get coordinates of all locations in amsterdam~~
 
 - set unified data model
 - change window of pulled data and increase number of pulled events
