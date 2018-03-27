@@ -1,14 +1,20 @@
-# Store data in a local db
 
-# Store the data gathered from current run into
-# a db on disk instance in data/ dir.
-# Function checks if data/db dir exists first,
-# and depending on this either appends to
-# pre-existing table or just creates new one.
+#' @title Store data in a local db
+#'
+#' @description Store the data gathered from current run into
+#' a db on disk instance in db_dir.
+#' Function checks if db_dir dir exists first, and depending
+#' on this either appends to pre-existing table or just creates new one.
+#'
+#' @param events dataframe, scraped data from current run
+#' @param db_dir string - path to dir where db should be/is
+#' @param table_name string - name of table
+#'
+#' @return TRUE on success, FALSE if something went wrong.
+#' @export
+#'
+#' @examples
 store_data_in_db <- function(events, db_dir, table_name) {
-
-  library("MonetDBLite")
-  library("DBI")
 
   # don't append to db if dir created succesfully
   # append otherwise (dir create failed)
@@ -23,18 +29,21 @@ store_data_in_db <- function(events, db_dir, table_name) {
   DBI::dbDisconnect(db_con)
 }
 
-#
+#' @title Connect to a table on local db instance
+#'
+#' @description Given a path to a dir of local db instance and
+#' a table name - connect to local db in order to work with data.
+#'
+#' @param db_dir string - path to where db sits
+#' @param table_name string - name of table to connect to
+#'
+#' @return A handle on the table in the db for further data management.
+#' @export
+#'
+#' @examples
 events_db_connect <- function(db_dir, table_name = NULL) {
-
+  # must provide table name (which source of data)
   stopifnot(!is.null(table_name))
-  # bring up libs
-  packs <- c("MonetDBLite", "DBI", "dplyr")
-  invisible(
-    sapply(
-      packs, library,
-      character.only = TRUE, quietly = TRUE
-    )
-  )
   # Connect to local monetDB
   db <- MonetDBLite::src_monetdb(embedded = db_dir)
   # Connect to table
@@ -59,13 +68,6 @@ events_db_connect <- function(db_dir, table_name = NULL) {
 #'
 events_db_connect <- function(db_dir, table_name = NULL) {
 
-  # bring up libs
-  packs <- c("MonetDBLite", "DBI", "dplyr")
-  suppressMessages(suppressWarnings(sapply(packs, require,
-                                           quietly = TRUE,
-                                           character.only = TRUE,
-                                           warn.conflicts = FALSE,
-                                           USE.NAMES = FALSE)))
   # Connect to local monetDB
   db <- MonetDBLite::src_monetdb(embedded = db_dir)
 
@@ -78,7 +80,6 @@ events_db_connect <- function(db_dir, table_name = NULL) {
   # Connect to table
   db_table <- dplyr::tbl(db, table_name)
 }
-
 
 #' Given a db object from \code{ht.monetDB.connect()}, retrieve the
 #' embedded connection object and shut it down.
