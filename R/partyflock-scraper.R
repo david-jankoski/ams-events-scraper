@@ -7,7 +7,6 @@ partyflock_scrape <- function() {
   Sys.sleep(10)
 
   # start splash wait till init done
-  library("splashr")
   sp <- splashr::start_splash()
   Sys.sleep(5)
 
