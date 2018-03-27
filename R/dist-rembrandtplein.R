@@ -1,3 +1,7 @@
+# File holding logic for calculating the distance of a given
+# event to the Rembrandtplein. Work in progress - use with care.
+
+
 # Read in Rembrandtplein defined as a spatial polygon ------
 #
 # How this was done can be found in corresponding file
