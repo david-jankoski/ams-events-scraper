@@ -17,8 +17,8 @@ Imports:
     dplyr,
     sys,
     splashr,
-    tools,
     lubridate,
     purrr,
     MonetDBLite,
-    Rfacebook
+    magrittr
+RoxygenNote: 6.0.1
