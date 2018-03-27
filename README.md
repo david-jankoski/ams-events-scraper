@@ -1,8 +1,3 @@
----
-title: "plan"
-output: html_document
----
-
 Scraper for events happening around Amsterdam. R pkg intented to provide functionality for:  
 
 - scraping of data from various sources
